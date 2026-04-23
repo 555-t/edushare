@@ -33,13 +33,13 @@ UM_DATABASE = {
 # 2. Z.AI MODEL INTEGRATION FUNCTION
 # ==========================================
 def call_zai_api(user_syllabus, database_context):
-    """
-    This function sends the user's syllabus and our database to the Z.AI model.
-    You MUST replace the API_KEY and ENDPOINT_URL with the ones provided by the hackathon organizers.
-    """
-    # TODO: Replace with your actual Z.AI credentials from the hackathon
-    API_KEY = "YOUR_Z_AI_API_KEY" 
-    ENDPOINT_URL = "https://api.z.ai/v1/chat/completions" # Replace with actual URL
+    # Fetch the key securely from secrets.toml
+    try:
+        API_KEY = st.secrets["ZAI_API_KEY"]
+    except KeyError:
+        return "Error: API Key not found. Please check your secrets configuration."
+    
+    ENDPOINT_URL = "https://api.z.ai/v1/chat/completions"
     
     # The Prompt Engineering (Crucial for judging)
     system_prompt = """
